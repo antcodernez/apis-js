@@ -4,9 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <title>random CATS | APIS: I</title>
+    <style>
+        *
+            {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+        body
+            {
+                display: grid;
+                place-items: center;
+                width: 100%;
+                height: 100vh;
+            }
+        .cats-image
+            {
+                width: 80%;
+                height: 65vh;
+            }
+        #button
+            {
+                width: 140px;
+                height: 40px;
+                border: none;
+                border-radius: 12px;
+                background-color: rgb(141, 60, 216);
+            }
+        #foxs
+            {
+                width: 140px;
+                height: 40px;
+                border: none;
+                border-radius: 12px;
+                background-color: rgb(141, 60, 216); 
+            }
+        #foxs:active
+            {
+                box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.597);                
+            }
+        #button:active
+            {
+                box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.597);
+            }
+    </style>
 </head>
 <body>
-    <button onclick="aver()">A ver si muy vergas</button>
+    <h1>Random cats con APIS</h1>
+    <button id="button">Muestrame un gato</button>
+    <button id="foxs">Muestrame un zorro</button>
+    <img src=""
+    alt="cats" class="cats-image">
     <script src="./code.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@
             }
         body
             {
+                position: relative;
                 display: grid;
                 place-items: center;
                 width: 100%;
@@ -26,6 +27,9 @@
             }
         #button
             {
+                position: fixed;
+                left: 2%;
+                top: 15%;
                 width: 140px;
                 height: 40px;
                 border: none;
@@ -34,6 +38,9 @@
             }
         #foxs
             {
+                position: fixed;
+                left: 2%;
+                top: 3%;
                 width: 140px;
                 height: 40px;
                 border: none;
@@ -48,14 +55,37 @@
             {
                 box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.597);
             }
+        .main-content
+            {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 40px;
+                width: 100%;
+                min-width: 320px;
+                max-width: 1200px;
+                height: 100vh;
+                background-color: rgba(11, 94, 162, 0.745);
+            }
+        .container-img
+            {
+                width: 200px;
+                height: 200px;
+            }
+        .img-cat
+            {
+                width: 170px;
+                height: 170px;
+            }
+        h2
+            {
+                position: absolute;
+            }
     </style>
 </head>
 <body>
-    <h1>Random cats con APIS</h1>
+    <h1>Random cats y foxs with apis</h1>
     <button id="button">Muestrame un gato</button>
     <button id="foxs">Muestrame un zorro</button>
-    <img src=""
-    alt="cats" class="cats-image">
-    <script src="./code.js"></script>
+    <script src="./code.js" defer></script>
 </body>
 </html>

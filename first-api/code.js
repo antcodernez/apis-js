@@ -2,7 +2,7 @@ const API = "https://api.thecatapi.com/v1/images/search";
 const API_quiery_limit_3 = "https://api.thecatapi.com/v1/images/search?limit=2&breed_ids=kora"; //Query parameter de la api con limite de 3 y usando el breed que se podria intuir que son las razas, la documentacion de la api dice que las breed_ids=xxxx son las primeras 4 letras de las razas
 //Liga ----> "https://developers.thecatapi.com/view-account/ylX4blBYT9FaoVd6OhvR?report=gpN-ReBkp"
 
-const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10";
+const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10&api_key=live_GATkX6WfSllkWQlEyUzVuMY6heKK18LpWjV9O8vxkGRbtrui9uvAic2Y1cUZoc4k";
 const foxsAPI = "https://randomfox.ca/floof/";
 
 const catImg = document.querySelector(".cats-image");
@@ -21,7 +21,7 @@ function getMeACat()
                         imgCatTag.src = cat.url;
                         // containerTag.appendChild(imgCatTag);   
 
-                        document.body.appendChild(imgCatTag);
+                        document.body.appendChild(imgCatTag); // Insertar dentro del body en el ultimo hijo
                     }
             })//Me devuelve una promesa, hago lo que quiera con mi respuesta de la API
         .catch(error => console.log(error));
@@ -62,7 +62,7 @@ btnDucks.addEventListener("click", () => {
 });
 btnGetCats.addEventListener("click", getMeACat);
 
-// Son asincronas y en bucle
+// Son asincronas y en intervalo
 // setInterval(getMeACat, 10000);
 // setInterval(() => getMeACatAsync(foxsAPI), 4000);
 

@@ -17,25 +17,28 @@ btnFavoriteCats.addEventListener("click",() => {
 
 function getMeACat()
     {          
-        fetch(api_ten_cats) //Recibe de argumento la URL de la API, como regresa una promesa puedo usar el método .then() 
+        fetch(API) //Recibe de argumento la URL de la API, como regresa una promesa puedo usar el método .then() 
         .then( res => res.json()) //Cuando cargo la API primero debo convertir mi respuesta a un objeto que pueda entender JS
         .then(data => 
             { 
                 for(cat of data)
                     {   
-                        let imgCatTag = document.createElement("img");
-                        let btncat = document.createElement("button");
-                        let containerCatImg = document.createElement("article");
+                        createAnimalOnDisplay(cat);
 
-                        imgCatTag.classList.add("cats-image");
-                        imgCatTag.src = cat.url;
+                        //Se creo una funcion para optimizar el codiog
+                        // let imgCatTag = document.createElement("img");
+                        // let btncat = document.createElement("button");
+                        // let containerCatImg = document.createElement("article");
+
+                        // imgCatTag.classList.add("cats-image");
+                        // imgCatTag.src = cat.url;
                         
-                        btncat.classList.add("button-add__michi_favorite");
-                        btncat.innerHTML = "agregar michis favoritos";
-                        btncat.setAttribute("onclick", "addTofavorites()");
+                        // btncat.classList.add("button-add__michi_favorite");
+                        // btncat.innerHTML = "agregar michis favoritos";
+                        // btncat.setAttribute("onclick", "addTofavorites()");
                         
-                        containerCatImg.append(imgCatTag, btncat);
-                        randomCatsNode.append(containerCatImg);
+                        // containerCatImg.append(imgCatTag, btncat);
+                        // randomCatsNode.append(containerCatImg);
                         
                         // containerTag.appendChild(imgCatTag);   
                         //document.body.appendChild(containerCatImg); 
@@ -63,12 +66,7 @@ async function getMeACatAsync(url)
         try
             {
                 const fox = await fetchData(url);
-                let imgCatTag = document.createElement("img");
-                let containerCatImg = document.createElement("article");
-                imgCatTag.classList.add("cats-image");
-                imgCatTag.src = fox.image;            
-                containerCatImg.append(imgCatTag);
-                randomCatsNode.append(containerCatImg);
+                createAnimalOnDisplay(fox);
             }
         catch(error)
             {
@@ -85,6 +83,23 @@ btnGetCats.addEventListener("click", getMeACat);
 function addTofavorites()
     {
         alert("hola xd");
+    }
+
+function createAnimalOnDisplay(jsonToRender)
+    {
+        let imgCatTag = document.createElement("img");
+        let btncat = document.createElement("button");
+        let containerCatImg = document.createElement("article");
+
+        imgCatTag.classList.add("cats-image");
+        imgCatTag.src = jsonToRender.image || jsonToRender.url;
+                        
+        btncat.classList.add("button-add__michi_favorite");
+        btncat.innerHTML = "agregar a favoritos";
+        btncat.setAttribute("onclick", "addTofavorites()");
+                        
+        containerCatImg.append(imgCatTag, btncat);
+        randomCatsNode.append(containerCatImg);
     }
 // Son asincronas y en intervalo
 // setInterval(getMeACat, 10000);

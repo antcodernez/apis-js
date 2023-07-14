@@ -16,7 +16,7 @@
             {
                 position: relative;
                 display: flex;
-                justify-content: space-evenly;
+                justify-content: flex-start;
                 place-items: center;
                 width: 100%;
                 height: 100vh;
@@ -45,7 +45,7 @@
             {
                 position: fixed;
                 left: 2%;
-                top: 3%;
+                top: 8%;
                 width: 140px;
                 height: 40px;
                 border: none;
@@ -62,7 +62,12 @@
             }
         .random-cats
             {
+                display: flex;
+                flex-direction: column;
                 margin-top: 270px;
+                width: 340px;
+                height: auto;
+                
             }
         .container-img
             {
@@ -81,12 +86,11 @@
             }
         article
             {
-                margin-top: 40px;
                 position: relative;
                 display: grid;
                 place-items: center;
                 flex-direction: column;
-                width: 400px;
+                width: inherit;
                 height: 400px;
             }
         .button-add__michi_favorite
@@ -128,6 +132,8 @@
         .favorite-cats
             {
                 display: none;
+                position: fixed;
+                right: 2%;
                 width: 336px;
                 height: 70%;
                 border-radius: 12px;
@@ -149,7 +155,7 @@
     <section class="random-cats">
     </section>
     <section class="favorite-cats">
-        <h2>Michis favoritos</h2>
+        <h2>Favorites cats and foxs</h2>
     </section>
     <button id="button">Muestrame un gato</button>
     <button id="foxs">Muestrame un zorro</button>

@@ -5,8 +5,15 @@ const API_quiery_limit_3 = "https://api.thecatapi.com/v1/images/search?limit=2&b
 const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10&api_key=live_GATkX6WfSllkWQlEyUzVuMY6heKK18LpWjV9O8vxkGRbtrui9uvAic2Y1cUZoc4k";
 const foxsAPI = "https://randomfox.ca/floof/";
 
-const catImg = document.querySelector(".cats-image");
+// const catImg = document.querySelector(".cats-image");
 const btnGetCats = document.getElementById("button");
+const btnFavoriteCats = document.querySelector(".icon-menu-favorite-michis");
+const randomCatsNode = document.querySelector(".random-cats");
+const favoriteCatsDisplay = document.querySelector(".favorite-cats");
+
+btnFavoriteCats.addEventListener("click",() => {
+    favoriteCatsDisplay.classList.toggle("favorite-cats__active")
+});
 
 function getMeACat()
     {          
@@ -17,11 +24,23 @@ function getMeACat()
                 for(cat of data)
                     {   
                         let imgCatTag = document.createElement("img");
+                        let btncat = document.createElement("button");
+                        let containerCatImg = document.createElement("article");
+
                         imgCatTag.classList.add("cats-image");
                         imgCatTag.src = cat.url;
+                        
+                        btncat.classList.add("button-add__michi_favorite");
+                        btncat.innerHTML = "agregar michis favoritos";
+                        btncat.setAttribute("onclick", "addTofavorites()");
+                        
+                        containerCatImg.append(imgCatTag, btncat);
+                        randomCatsNode.append(containerCatImg);
+                        
                         // containerTag.appendChild(imgCatTag);   
+                        //document.body.appendChild(containerCatImg); 
+                        // Insertar dentro del body en el ultimo hijo
 
-                        document.body.appendChild(imgCatTag); // Insertar dentro del body en el ultimo hijo
                     }
             })//Me devuelve una promesa, hago lo que quiera con mi respuesta de la API
         .catch(error => console.log(error));
@@ -45,10 +64,11 @@ async function getMeACatAsync(url)
             {
                 const fox = await fetchData(url);
                 let imgCatTag = document.createElement("img");
+                let containerCatImg = document.createElement("article");
                 imgCatTag.classList.add("cats-image");
-                imgCatTag.src = fox.image;
-                document.body.appendChild(imgCatTag);
-                
+                imgCatTag.src = fox.image;            
+                containerCatImg.append(imgCatTag);
+                randomCatsNode.append(containerCatImg);
             }
         catch(error)
             {
@@ -62,7 +82,10 @@ btnDucks.addEventListener("click", () => {
 });
 btnGetCats.addEventListener("click", getMeACat);
 
+function addTofavorites()
+    {
+        alert("hola xd");
+    }
 // Son asincronas y en intervalo
 // setInterval(getMeACat, 10000);
 // setInterval(() => getMeACatAsync(foxsAPI), 4000);
-

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <title>random CATS | APIS: I</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         *
             {
@@ -15,19 +15,24 @@
         body
             {
                 position: relative;
-                display: grid;
+                display: flex;
+                justify-content: space-evenly;
                 place-items: center;
                 width: 100%;
                 height: 100vh;
+                font-family: sans-serif;
+
             }
         .cats-image
             {
                 width: 80%;
-                height: 65vh;
+                height: 200px;
+                border-radius: 18px;   ;
             }
         #button
             {
                 position: fixed;
+                z-index: 3;
                 left: 2%;
                 top: 15%;
                 width: 140px;
@@ -55,16 +60,9 @@
             {
                 box-shadow: 5px 4px 5px rgba(0, 0, 0, 0.597);
             }
-        .main-content
+        .random-cats
             {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 40px;
-                width: 100%;
-                min-width: 320px;
-                max-width: 1200px;
-                height: 100vh;
-                background-color: rgba(11, 94, 162, 0.745);
+                margin-top: 270px;
             }
         .container-img
             {
@@ -72,18 +70,87 @@
                 height: 200px;
             }
         .img-cat
-            {
+            {   
                 width: 170px;
                 height: 170px;
             }
-        h2
+        h1
             {
                 position: absolute;
+                top: 2%;
+            }
+        article
+            {
+                margin-top: 40px;
+                position: relative;
+                display: grid;
+                place-items: center;
+                flex-direction: column;
+                width: 400px;
+                height: 400px;
+            }
+        .button-add__michi_favorite
+            {
+                position: absolute;
+                top: 279px;
+                left: calc(50% - 100px);
+                border: none;
+                border-radius: 12px;
+                width: 200px;
+                height: 40px;
+                font-size: 13px;
+                cursor: pointer;
+                background-color: turquoise;
+                transition-duration: 1.11s;
+            }
+        .button-add__michi_favorite:active
+            {
+                transform: scale(1.2);
+                transition-duration: .5s;
+            }
+        .button-favorite-cats
+            {
+                z-index: 3;
+                position: relative;
+                left: 0;
+            }
+        .icon-menu-favorite-michis
+            {
+                position: absolute;
+                left: 90%;
+                top: 5%;    
+                border-radius: 20%;
+                font-size: 40px;
+                background-color: aquamarine;
+                cursor: pointer;
+                box-shadow:  2px 2px 3px rgba(8, 6, 6, 0.889);
+            }
+        .favorite-cats
+            {
+                display: none;
+                width: 336px;
+                height: 70%;
+                border-radius: 12px;
+                background-color:blueviolet;
+            }
+        .favorite-cats__active
+            {
+                display: block;
+            }
+        .favorite-cats h2
+            {
+                text-align: center;
             }
     </style>
 </head>
 <body>
-    <h1>Random cats y foxs with apis</h1>
+    <i class='bx bx-menu-alt-right icon-menu-favorite-michis'></i>
+    <h1>Michis and foxs with apis</h1>
+    <section class="random-cats">
+    </section>
+    <section class="favorite-cats">
+        <h2>Michis favoritos</h2>
+    </section>
     <button id="button">Muestrame un gato</button>
     <button id="foxs">Muestrame un zorro</button>
     <script src="./code.js" defer></script>

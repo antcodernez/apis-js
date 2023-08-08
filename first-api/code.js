@@ -1,9 +1,12 @@
+//APIS usadas 
 const API = "https://api.thecatapi.com/v1/images/search";
 const API_quiery_limit_3 = "https://api.thecatapi.com/v1/images/search?limit=2&breed_ids=kora"; //Query parameter de la api con limite de 3 y usando el breed que se podria intuir que son las razas, la documentacion de la api dice que las breed_ids=xxxx son las primeras 4 letras de las razas
 //Liga ----> "https://developers.thecatapi.com/view-account/ylX4blBYT9FaoVd6OhvR?report=gpN-ReBkp"
 
 const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10&api_key=live_GATkX6WfSllkWQlEyUzVuMY6heKK18LpWjV9O8vxkGRbtrui9uvAic2Y1cUZoc4k";
 const foxsAPI = "https://randomfox.ca/floof/";
+
+const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
 
 // const catImg = document.querySelector(".cats-image");
 const btnGetCats = document.getElementById("button");
@@ -24,32 +27,25 @@ function getMeACat()
                 for(cat of data)
                     {   
                         createAnimalOnDisplay(cat);
-
-                        //Se creo una funcion para optimizar el codiog
-                        // let imgCatTag = document.createElement("img");
-                        // let btncat = document.createElement("button");
-                        // let containerCatImg = document.createElement("article");
-
-                        // imgCatTag.classList.add("cats-image");
-                        // imgCatTag.src = cat.url;
-                        
-                        // btncat.classList.add("button-add__michi_favorite");
-                        // btncat.innerHTML = "agregar michis favoritos";
-                        // btncat.setAttribute("onclick", "addTofavorites()");
-                        
-                        // containerCatImg.append(imgCatTag, btncat);
-                        // randomCatsNode.append(containerCatImg);
-                        
-                        // containerTag.appendChild(imgCatTag);   
-                        //document.body.appendChild(containerCatImg); 
-                        // Insertar dentro del body en el ultimo hijo
-
                     }
             })//Me devuelve una promesa, hago lo que quiera con mi respuesta de la API
         .catch(error => console.log(error));
 
     }
 
+
+function getFavoriteCats()
+    {
+        fetch(api_url_favourites)
+        .then(res => res.json())
+        .the(data => 
+            {   
+                for (cat in data)
+                    {
+                        
+                    }
+            });
+    }
 // setInterval(getMeACat, 1000);
 
 // Obteniendo los gatos con async y await
@@ -73,9 +69,9 @@ async function getMeACatAsync(url)
                 console.log(error);
             }
     }
-const btnDucks = document.getElementById("foxs");
+const btnFoxs = document.getElementById("foxs");
 
-btnDucks.addEventListener("click", () => {
+btnFoxs.addEventListener("click", () => {
     getMeACatAsync(foxsAPI);
 });
 btnGetCats.addEventListener("click", getMeACat);

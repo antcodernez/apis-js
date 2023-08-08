@@ -141,11 +141,56 @@
             }
         .favorite-cats__active
             {
-                display: block;
+                display: flex;
+                flex-direction: column;
             }
-        .favorite-cats h2
+        .favorite-cats__container-title
             {
-                text-align: center;
+                display: grid;
+                place-items: center;
+                width: inherit;
+                height: 50px;
+                background-color: aqua;
+            }        
+        .favorite-cats__container-title h2
+            {
+                margin-top: 20px;
+                color: black;
+            }
+        .favorite-cats__container-items
+            {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                width: inherit;
+                height: 445px;
+                background-color: burlywood;
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                overflow-y: scroll;
+                gap: 40px;
+            }
+        .item-favorite-cats
+            {
+                width: 270px;
+                height: 242px;
+                background-color: black;
+            }
+        ::-webkit-scrollbar
+            {
+                width: 12px;
+            }
+        ::-webkit-scrollbar-track
+            {
+                /* background-color de la scrollbar */
+                background-color: papayawhip;
+            }
+        ::-webkit-scrollbar-thumb
+            {
+                /* color de la barra de scroll */
+                background-image: linear-gradient(180deg, red, blue);
+                border-radius: 8px;
+                height: 40px;
             }
     </style>
 </head>
@@ -155,7 +200,14 @@
     <section class="random-cats">
     </section>
     <section class="favorite-cats">
-        <h2>Favorites cats and foxs</h2>
+        <div class="favorite-cats__container-title">
+            <h2>Favorites cats and foxs</h2>
+        </div>
+        <div class="favorite-cats__container-items">
+            <div class="item-favorite-cats"></div>
+            <div class="item-favorite-cats"></div>
+            <div class="item-favorite-cats"></div>
+        </div>
     </section>
     <button id="button">Muestrame un gato</button>
     <button id="foxs">Muestrame un zorro</button>

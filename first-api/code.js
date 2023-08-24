@@ -1,50 +1,67 @@
 //APIS usadas 
-const API = "https://api.thecatapi.com/v1/images/search";
 const API_quiery_limit_3 = "https://api.thecatapi.com/v1/images/search?limit=2&breed_ids=kora"; //Query parameter de la api con limite de 3 y usando el breed que se podria intuir que son las razas, la documentacion de la api dice que las breed_ids=xxxx son las primeras 4 letras de las razas
 //Liga ----> "https://developers.thecatapi.com/view-account/ylX4blBYT9FaoVd6OhvR?report=gpN-ReBkp"
 
 const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10&api_key=live_GATkX6WfSllkWQlEyUzVuMY6heKK18LpWjV9O8vxkGRbtrui9uvAic2Y1cUZoc4k";
 const foxsAPI = "https://randomfox.ca/floof/";
 
+
+
+const random_cats_API = "https://api.thecatapi.com/v1/images/search";
+const api_key = "api_key=live_QzBg6qTgDRyfYjZulW8KmtNP9Ihi0Nj9ciT8Dg6vgCVFZmMDy4xM99uiujyKvewM";
 const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
+
 
 // const catImg = document.querySelector(".cats-image");
 const btnGetCats = document.getElementById("button");
-const btnFavoriteCats = document.querySelector(".icon-menu-favorite-michis");
-const randomCatsNode = document.querySelector(".random-cats");
-const favoriteCatsDisplay = document.querySelector(".favorite-cats");
+btnGetCats.addEventListener("click", getmeARandomCat);
 
+const favoriteCatsDisplay = document.querySelector(".favorite-cats");
+const spanError = document.getElementById("error");
+
+const btnFavoriteCats = document.querySelector(".icon-menu-favorite-michis");
 btnFavoriteCats.addEventListener("click",() => {
-    favoriteCatsDisplay.classList.toggle("favorite-cats__active")
+    favoriteCatsDisplay.classList.toggle("favorite-cats__active");
+
+    if(favoriteCatsDisplay.classList.contains("favorite-cats__active"))
+        {
+            console.log("get de los gatos favoritos")
+            loadFavoriteCats();                 
+        }
 });
 
-function getMeACat()
-    {          
-        fetch(API) //Recibe de argumento la URL de la API, como regresa una promesa puedo usar el método .then() 
-        .then( res => res.json()) //Cuando cargo la API primero debo convertir mi respuesta a un objeto que pueda entender JS
-        .then(data => 
-            { 
-                for(cat of data)
-                    {   
-                        createAnimalOnDisplay(cat);
-                    }
-            })//Me devuelve una promesa, hago lo que quiera con mi respuesta de la API
-        .catch(error => console.log(error));
 
+const imgRandomCat = document.querySelector(".cats-image");
+
+async function getmeARandomCat()
+    {
+        const res = await fetch(random_cats_API);
+        const data = await res.json();
+        if(res.status !== 200)
+            {
+                spanError.innerHTML = `Hubo un error ${res.status}`
+            }
+        else
+            {
+                console.log("get de un gato aleatorio")
+                console.log(data);
+                imgRandomCat.setAttribute("src", `${data[0].url}`)
+            }
     }
 
-
-function getFavoriteCats()
+async function loadFavoriteCats()
     {
-        fetch(api_url_favourites)
-        .then(res => res.json())
-        .the(data => 
-            {   
-                for (cat in data)
-                    {
-                        
-                    }
-            });
+       const res = await fetch(`${api_url_favourites}?${api_key}`);
+       const data = await res.json();
+       
+       if(res.status !== 200)
+            {
+                spanError.innerHTML = `Hubo un error ${res.status}`
+            }
+        else
+            {
+                console.log(data)
+            }
     }
 // setInterval(getMeACat, 1000);
 
@@ -57,7 +74,7 @@ async function fetchData(urlAPI)
         return data;
     }
 
-async function getMeACatAsync(url)
+async function getMeAFoxAsync(url)
     {
         try
             {
@@ -72,31 +89,14 @@ async function getMeACatAsync(url)
 const btnFoxs = document.getElementById("foxs");
 
 btnFoxs.addEventListener("click", () => {
-    getMeACatAsync(foxsAPI);
+    getMeAFoxAsync(foxsAPI);
 });
-btnGetCats.addEventListener("click", getMeACat);
 
 function addTofavorites()
     {
         alert("hola xd");
     }
 
-function createAnimalOnDisplay(jsonToRender)
-    {
-        let imgCatTag = document.createElement("img");
-        let btncat = document.createElement("button");
-        let containerCatImg = document.createElement("article");
-
-        imgCatTag.classList.add("cats-image");
-        imgCatTag.src = jsonToRender.image || jsonToRender.url;
-                        
-        btncat.classList.add("button-add__michi_favorite");
-        btncat.innerHTML = "agregar a favoritos";
-        btncat.setAttribute("onclick", "addTofavorites()");
-                        
-        containerCatImg.append(imgCatTag, btncat);
-        randomCatsNode.append(containerCatImg);
-    }
 // Son asincronas y en intervalo
 // setInterval(getMeACat, 10000);
 // setInterval(() => getMeACatAsync(foxsAPI), 4000);

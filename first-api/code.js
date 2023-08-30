@@ -7,12 +7,11 @@ const foxsAPI = "https://randomfox.ca/floof/";
 
 
 
+const api_key = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
 const random_cats_API = "https://api.thecatapi.com/v1/images/search";
-const api_key = "api_key=live_QzBg6qTgDRyfYjZulW8KmtNP9Ihi0Nj9ciT8Dg6vgCVFZmMDy4xM99uiujyKvewM";
 const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
-const cleanAPi_key = "live_QzBg6qTgDRyfYjZulW8KmtNP9Ihi0Nj9ciT8Dg6vgCVFZmMDy4xM99uiujyKvewM";
+const api_fav_cats = "https://api.thecatapi.com/v1/favourites?api_key=live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd"
 
-// const catImg = document.querySelector(".cats-image");
 const btnGetCats = document.getElementById("button");
 btnGetCats.addEventListener("click", getmeARandomCat);
 
@@ -20,6 +19,7 @@ const favoriteCatsDisplay = document.querySelector(".favorite-cats");
 const spanError = document.querySelector(".error");
 
 const btnFavoriteCats = document.querySelector(".icon-menu-favorite-michis");
+
 btnFavoriteCats.addEventListener("click",() => {
     favoriteCatsDisplay.classList.toggle("favorite-cats__active");
 
@@ -30,9 +30,7 @@ btnFavoriteCats.addEventListener("click",() => {
         }
 });
 
-
 const imgRandomCat = document.querySelector(".cats-image");
-
 
 async function getmeARandomCat()
     {
@@ -54,11 +52,11 @@ async function getmeARandomCat()
 
 async function loadFavoriteCats()
     {
-       const res = await fetch(`${api_url_favourites}?${api_key}`);
+       const res = await fetch(api_fav_cats);
        const data = await res.json();
        
        if(res.status !== 200)
-            {
+            {   
                 spanError.innerText = `Hubo un error ${res.status} al momento de cargar los gatos favoritos`;
             }
         else
@@ -68,25 +66,17 @@ async function loadFavoriteCats()
     }
 // setInterval(getMeACat, 1000);
 
-// Obteniendo los gatos con async y await
-
-
-
-let rawBody = JSON.stringify({
-    "image_id": "3cp"
-});
-
 async function saveFavoriteMichis()
     {
         console.log("post de un gato aleatorio a favoritos");
         
-        const res = await fetch(`${api_url_favourites}`, {
-                method: "POST",
-                headers: {'x-api-key' : 'live_QzBg6qTgDRyfYjZulW8KmtNP9Ihi0Nj9ciT8Dg6vgCVFZmMDy4xM99uiujyKvewM'},
-                body : rawBody
-            })
+        const res = await fetch(api_fav_cats, {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body : JSON.stringify({image_id: "CKVhCI0bz"})
+                })
         const data = await res;
-
+        console.log(data);
 
         if(res.status !== 200)
             {
@@ -94,7 +84,6 @@ async function saveFavoriteMichis()
             }
         
     }
-
         
 // const newFavourite = await fetch(
 //         "https://api.thecatapi.com/v1/favourites", 

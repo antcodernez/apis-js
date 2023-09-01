@@ -6,7 +6,6 @@ const api_ten_cats = "https://api.thecatapi.com/v1/images/search?limit=10&api_ke
 const foxsAPI = "https://randomfox.ca/floof/";
 
 
-
 const api_key = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
 const random_cats_API = "https://api.thecatapi.com/v1/images/search";
 const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
@@ -19,16 +18,24 @@ const favoriteCatsDisplay = document.querySelector(".favorite-cats");
 const spanError = document.querySelector(".error");
 
 const btnFavoriteCats = document.querySelector(".icon-menu-favorite-michis");
+const containerFavoriteCats = document.querySelector(".favorite-cats__container-items");
+const catsFavoritesItems = document.querySelectorAll(".item-favorite-cats");
 
-btnFavoriteCats.addEventListener("click",() => {
-    favoriteCatsDisplay.classList.toggle("favorite-cats__active");
+function activeDisplayFavMichis()
+    {
+        favoriteCatsDisplay.classList.toggle("favorite-cats__active");
 
-    if(favoriteCatsDisplay.classList.contains("favorite-cats__active"))
-        {
-            console.log("get de los gatos favoritos")
-            loadFavoriteCats();                 
-        }
-});
+        if(favoriteCatsDisplay.classList.contains("favorite-cats__active"))
+            {
+                console.log("get de los gatos favoritos")
+                loadFavoriteCats();                 
+            }
+        else   
+            {
+                deleteNodeChildsOnFavoriteCats() 
+            }
+    }
+btnFavoriteCats.addEventListener("click", activeDisplayFavMichis);
 
 const imgRandomCat = document.querySelector(".cats-image");
 
@@ -53,7 +60,7 @@ async function getmeARandomCat()
 async function loadFavoriteCats()
     {
        const res = await fetch(api_fav_cats);
-       const data = await res.json();
+       const dataFav = await res.json();
        
        if(res.status !== 200)
             {   
@@ -61,7 +68,8 @@ async function loadFavoriteCats()
             }
         else
             {
-                console.log(data)
+                console.log(dataFav);
+                renderFavoriteCats(dataFav);
             }
     }
 // setInterval(getMeACat, 1000);
@@ -73,74 +81,86 @@ async function saveFavoriteMichis()
         const res = await fetch(api_fav_cats, {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'},
-                    body : JSON.stringify({image_id: "CKVhCI0bz"})
+                    body : JSON.stringify({image_id: imgRandomCat.getAttribute("id")})
                 })
         const data = await res;
-        console.log(data);
 
+        if(data.status == 200 && !favoriteCatsDisplay.classList.contains("favorite-cats__active"))
+                {
+                    activeDisplayFavMichis();                    
+                }
+        else if (data.status == 200 && favoriteCatsDisplay.classList.contains("favorite-cats__active"))
+                {
+                    deleteNodeChildsOnFavoriteCats();
+                    loadFavoriteCats();
+                }
         if(res.status !== 200)
             {
-                spanError.innerText = `Hubo un error ${res.status} al momento de guardar un gato en favoritos`; 
+                spanError.innerText = `Hubo un error ${res.status} al momento de guardar un gato en favoritos ${data}`; 
             }
         
     }
+     
+function renderFavoriteCats(cats)
+    {
+        for(cat of cats)
+            {
+                let containerCat = document.createElement("div");
+                containerCat.classList.add("item-favorite-cats");
+                let imgCat = document.createElement("img");
+                imgCat.setAttribute("src", `${cat.image.url}`);
+                // data[0].image.url
+                imgCat.classList.add("img-favorite-cat");
+                let button = document.createElement("button");
+                button.classList.add("delete-cat-on-favorites");
+                button.textContent = "eliminar de favoritos";
+                button.setAttribute("onclick", "deleteCatOnFavorites()")
+                button.setAttribute("id", `${cat.id}`);
+                containerCat.append(imgCat, button);
+                containerFavoriteCats.append(containerCat);
+            }
+    }
+function deleteNodeChildsOnFavoriteCats()
+    {
+        for (let i = containerFavoriteCats.childNodes.length - 1;  i >= 0; i--)
+            {
+                containerFavoriteCats.removeChild(containerFavoriteCats.childNodes[i]);
+            }
+    }
+
+function deleteCatOnFavorites()
+    {
+        console.log("Delete de un gato"); 
+        const btnAllFavoritesCats = document.querySelectorAll(".delete-cat-on-favorites");
+        btnAllFavoritesCats.forEach(item => {
+            item.addEventListener("click", e => {
+                deleteWithIdCatOnFavorites(e.target.getAttribute("id"));
+            })
+        })
+    }
+
+async function deleteWithIdCatOnFavorites(id)
+    {
         
-// const newFavourite = await fetch(
-//         "https://api.thecatapi.com/v1/favourites", 
-//             {
-//                 method: 'POST',
-//                 headers: { 'x-api-key': 'YOUR-KEY'} ,
-//                 body: rawBody
-//             }
-//         )
-          
-// Son asincronas y en intervalo
-// setInterval(getMeACat, 10000);
-// setInterval(() => getMeACatAsync(foxsAPI), 4000);
+        const res = await fetch(`${api_url_favourites}/${id}`, 
+                {
+                    method: "DELETE",
+                    headers: {'Content-Type': 'application/json', 'x-api-key': api_key }
+                });
 
+        const data = await res;
+        if(data.status == 200)
+                {
+                    const res = await fetch(api_fav_cats);
+                    const cats = await res.json();             
+                    deleteNodeChildsOnFavoriteCats();
+                    renderFavoriteCats(cats);
+                    console.log("Se ha eliminado correctamente el gato de favoritos master");
+                }
+        if(res.status !== 200)
+            {
+                spanError.innerText = `Hubo un error ${res.status} al momento de eliminar un gato en favoritos ${data}`; 
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Codigo para los zorros
-
-// async function fetchData(urlAPI)
-//     {
-//         const response = await fetch(urlAPI);
-//         const data = await response.json();
-//         return data;
-//     }
-
-// async function getMeAFoxAsync(url)
-//     {
-//         try
-//             {
-//                 const fox = await fetchData(url);
-//                 createAnimalOnDisplay(fox);
-//             }
-//         catch(error)
-//             {
-//                 console.log(error);
-//             }
-//     }
-// const btnFoxs = document.getElementById("foxs");
-
-// btnFoxs.addEventListener("click", () => {
-//     getMeAFoxAsync(foxsAPI);
-// });
+    }
+getmeARandomCat();

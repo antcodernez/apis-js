@@ -164,3 +164,6 @@ async function deleteWithIdCatOnFavorites(id)
 
     }
 getmeARandomCat();
+
+
+console.log("Hola");

@@ -9,7 +9,6 @@ const foxsAPI = "https://randomfox.ca/floof/";
 const api_key = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
 const random_cats_API = "https://api.thecatapi.com/v1/images/search";
 const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
-const api_fav_cats = "https://api.thecatapi.com/v1/favourites?api_key=live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd"
 
 const btnGetCats = document.getElementById("button");
 btnGetCats.addEventListener("click", getmeARandomCat);
@@ -59,7 +58,12 @@ async function getmeARandomCat()
 
 async function loadFavoriteCats()
     {
-       const res = await fetch(api_fav_cats);
+       const res = await fetch(api_url_favourites, {
+        method: "GET",
+        headers: {
+            "x-api-key": api_key
+        }
+       });
        const dataFav = await res.json();
        
        if(res.status !== 200)
@@ -78,9 +82,12 @@ async function saveFavoriteMichis()
     {
         console.log("post de un gato aleatorio a favoritos");
         
-        const res = await fetch(api_fav_cats, {
+        const res = await fetch(api_url_favourites, {
                     method: "POST",
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "x-api-key": api_key
+                    },
                     body : JSON.stringify({image_id: imgRandomCat.getAttribute("id")})
                 })
         const data = await res;
@@ -149,9 +156,15 @@ async function deleteWithIdCatOnFavorites(id)
                 });
 
         const data = await res;
+
         if(data.status == 200)
                 {
-                    const res = await fetch(api_fav_cats);
+                    const res = await fetch(api_url_favourites, {
+                        method: "GET",
+                        headers: {
+                            "x-api-key": api_key
+                        }                    
+                    });
                     const cats = await res.json();             
                     deleteNodeChildsOnFavoriteCats();
                     renderFavoriteCats(cats);

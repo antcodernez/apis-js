@@ -9,6 +9,7 @@ const foxsAPI = "https://randomfox.ca/floof/";
 const api_key = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
 const random_cats_API = "https://api.thecatapi.com/v1/images/search";
 const api_url_favourites = "https://api.thecatapi.com/v1/favourites";
+const api_upload_img = "https://api.thecatapi.com/v1/images/upload";
 
 const btnGetCats = document.getElementById("button");
 btnGetCats.addEventListener("click", getmeARandomCat);
@@ -176,7 +177,25 @@ async function deleteWithIdCatOnFavorites(id)
             }
 
     }
+
+async function uploadMichi()
+    {
+        const form = document.getElementById("uploadingForm");
+        const formData = new FormData(form);
+        console.log({formData}); 
+
+        const res = await fetch(api_upload_img, {
+            method: "POST",
+            headers:{
+                // "Content-Type": "multipart/form-data",
+                "x-api-key": api_key
+            },
+            body: formData
+        })
+
+        const data = await JSON.parse(res);
+        console.log("Lo logro ahora si master es una riata bien parada :D");
+        console.log(res);
+        console.log(data);
+    }   
 getmeARandomCat();
-
-
-console.log("Hola");

@@ -1,3 +1,5 @@
+// const { default: axios } = require("axios");
+
 //APIS usadas 
 const API_quiery_limit_3 = "https://api.thecatapi.com/v1/images/search?limit=2&breed_ids=kora"; //Query parameter de la api con limite de 3 y usando el breed que se podria intuir que son las razas, la documentacion de la api dice que las breed_ids=xxxx son las primeras 4 letras de las razas
 //Liga ----> "https://developers.thecatapi.com/view-account/ylX4blBYT9FaoVd6OhvR?report=gpN-ReBkp"
@@ -193,9 +195,26 @@ async function uploadMichi()
             body: formData
         })
 
-        const data = await JSON.parse(res);
+        const data = await JSON.stringify(res);
         console.log("Lo logro ahora si master es una riata bien parada :D");
         console.log(res);
         console.log(data);
     }   
 getmeARandomCat();
+
+// AXIOS: importamos un script de common al html
+const api = axios.create({
+    baseURL: "https://api.thecatapi.com/v1",
+}); 
+api.defaults.headers.common["X-API-KEY"] = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
+
+
+async function saveFavoriteMichisAxios()
+    {
+        console.log("post de un gato aleatorio a favoritos");
+        const res = await api.post("/favourites", {
+            image_id: "d61"
+        });
+
+        console.log(res)
+    }

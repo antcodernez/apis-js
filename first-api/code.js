@@ -206,6 +206,7 @@ getmeARandomCat();
 const api = axios.create({
     baseURL: "https://api.thecatapi.com/v1",
 }); 
+
 api.defaults.headers.common["X-API-KEY"] = "live_hNVtYB4DspZW7WNF6QbKkZeb0HQQt4c8BcYvcQ1WUBiJUwq3sdr1F0YeF85VhOEd";
 
 
